@@ -1,86 +1,180 @@
 //
 //  ContentView.swift
-//  BoardRooms
+//  Details room screen
 //
-//  Created by leena alyami on 03/08/1445 AH.
-//
+//  Created by Alanoud Alshuaibi on 03/08/1445 AH.
+
 
 import SwiftUI
-import CoreData
 
 struct ContentView: View {
-    @Environment(\.managedObjectContext) private var viewContext
-
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Item.timestamp, ascending: true)],
-        animation: .default)
-    private var items: FetchedResults<Item>
-
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(items) { item in
-                    NavigationLink {
-                        Text("Item at \(item.timestamp!, formatter: itemFormatter)")
-                    } label: {
-                        Text(item.timestamp!, formatter: itemFormatter)
+        
+        NavigationView{
+            
+                    
+        
+        VStack {
+            
+            
+            VStack{
+                    Text("Ideation Room")
+                        .font(.system(size: 25))
+                        .font(.title)
+                        .foregroundColor(.white)
+                        //.padding()
+                
+
+          
+            }//.padding(.bottom,180)
+            .frame(width: 2000 , height: 50)
+            .background(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+            
+            ZStack{
+                Image("IdeationRoom")
+                    .imageScale(.large)
+                    .foregroundStyle(.tint)
+                
+                
+                HStack{
+                    
+                    Image(systemName: "location")
+                        .font(.system(size: 16))
+                        .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+                    
+                    Text("Floor 3")
+                        .font(.system(size: 16))
+                        .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+                    
+                }.padding(.top ,250)
+                    .padding(.trailing , 280)
+                
+                
+                
+                ZStack{
+                    
+                    
+                    Rectangle()
+                        .frame(width: 65, height: 30)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(10)
+                    HStack{
+                        
+                        Image(systemName: "person.2")
+                            .font(.system(size: 16))
+                            .foregroundColor(Color(red: 0.831372549, green: 0.368627451, blue: 0.223529412))
+                        
+                        Text("16")
+                            .font(.system(size: 16))
+                            .foregroundColor(Color(red: 0.831372549, green: 0.368627451, blue: 0.223529412))
+                        
                     }
+                    
+                }.padding(.top ,250)
+                    .padding(.leading , 280)
+                
+            }//.padding(.bottom,120)
+            
+            
+            VStack{
+                
+                Text("Description")
+                    .font(.system(size: 20))
+                    .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+                    .padding(.trailing,240)
+                
+                ZStack{
+                    
+                    
+                    Rectangle()
+                        .frame(width: 360, height: 120)
+                        .foregroundColor(Color.white)
+                        .cornerRadius(5)
+                    
+                    
+                    
+                    Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type.")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+                        .frame(width: 360 , height: 120)
+                    
                 }
-                .onDelete(perform: deleteItems)
-            }
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    EditButton()
-                }
-                ToolbarItem {
-                    Button(action: addItem) {
-                        Label("Add Item", systemImage: "plus")
+                
+            }/*.padding(.bottom ,200)*/
+            
+            VStack{
+                
+                Text("Facilities")
+                    .font(.system(size: 20))
+                    .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+                    .padding(.trailing,250)
+                
+                HStack{
+                    ZStack{
+                        
+                        
+                        Rectangle()
+                            .frame(width: 80, height: 35)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(10)
+                        HStack{
+                            
+                            Image(systemName: "wifi")
+                                .font(.system(size: 16))
+                                .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+
+                            Text("Wi-Fi")
+                                .font(.system(size: 16))
+                                .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+
+                        }
+                        
                     }
-                }
-            }
-            Text("Select an item")
-        }
+                    
+                    
+                    ZStack{
+                        
+                        
+                        Rectangle()
+                            .frame(width: 85, height: 35)
+                            .foregroundColor(Color.white)
+                            .cornerRadius(10)
+                        HStack{
+                            
+                            Image(systemName: "tv")
+                                .font(.system(size: 16))
+                                .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+
+                            Text("Screen")
+                                .font(.system(size: 16))
+                                .foregroundColor(Color(red: 0.137254902, green: 0.1411764706, blue: 0.3333333333))
+
+                        }
+                        
+                    }
+                    
+                }// hstack
+                .padding(.trailing,150)
+                
+            }// vstack for Facilities
+            
+            
+            
+            
+            
+            
+            
+            
+        }.padding(.bottom,180)
+        .background(Color(red: 243/255, green: 243/255, blue: 243/255))
+
     }
+        
 
-    private func addItem() {
-        withAnimation {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            offsets.map { items[$0] }.forEach(viewContext.delete)
-
-            do {
-                try viewContext.save()
-            } catch {
-                // Replace this implementation with code to handle the error appropriately.
-                // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
-                let nsError = error as NSError
-                fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-            }
-        }
+        
     }
 }
 
-private let itemFormatter: DateFormatter = {
-    let formatter = DateFormatter()
-    formatter.dateStyle = .short
-    formatter.timeStyle = .medium
-    return formatter
-}()
-
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView()
 }
